@@ -1,11 +1,11 @@
 package me.hyoputer;
 
-public class SteamApi {
+public class Steam {
     private static String URL_FORMAT = "https://steamcommunity.com/profiles/%s/followedgames/";
 
     private String userId;
 
-    public SteamApi(String userId) {
+    public Steam(String userId) {
         this.userId = userId;
     }
 
