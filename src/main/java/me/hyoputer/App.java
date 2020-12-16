@@ -2,6 +2,7 @@ package me.hyoputer;
 
 import java.io.IOException;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.jsoup.Jsoup;
 
@@ -11,7 +12,10 @@ import org.jsoup.Jsoup;
  */
 public class App {
     public static void main(String[] args) throws IOException {
-        Jsoup.connect(Configs.STEAM_FOLLOWED_URL).get().select(".gameListRowItemName > a").eachAttr("href")
-                .stream().map(str -> Pattern.compile("\\D*").matcher(str).replaceAll("")).forEach(System.out::println);
+
+        SteamApi steamApi = new SteamApi(System.getenv("STEAM_USER_ID"));
+
+        System.out.println(Jsoup.connect(steamApi.getFollowedURL()).get().select(".gameListRowItemName > a").eachAttr("href")
+                .stream().map(str -> Pattern.compile("\\D*").matcher(str).replaceAll("")).collect(Collectors.toList()));
     }
 }
