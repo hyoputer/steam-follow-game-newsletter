@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 
 /**
@@ -34,7 +35,7 @@ public class SteamFollowedGameNewsLetter {
             }
         });
 
-        if (gistId != null) {
+        if (StringUtils.isNotBlank(gistId)) {
             JsonObject gistContent = JsonParser
                     .parseString(gistClient.getGist(gistId.toString()).get("files").getAsJsonObject()
                             .get(System.getenv("GIST_FILE_NAME")).getAsJsonObject().get("content").getAsString())
