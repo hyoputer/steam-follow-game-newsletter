@@ -26,6 +26,7 @@ public class Gist {
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         connection.setRequestProperty("Authorization", "token " + accessToken);
+        connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
         connection.setDoOutput(true);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
