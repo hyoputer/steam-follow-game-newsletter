@@ -2,8 +2,6 @@ package me.hyoputer;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -11,7 +9,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Jsoup;
 
 /**
  * Hello world!
@@ -24,9 +21,7 @@ public class SteamFollowedGameNewsLetter {
         Gist gistClient = new Gist(System.getenv("GIST_ACCESS_KEY"));
 
         //get AppIds by parsing html
-        List<String> appIds = Jsoup.connect(steamClient.getFollowedURL()).get().select(".gameListRowItemName > a")
-                .eachAttr("href").stream().map(str -> Pattern.compile("\\D*").matcher(str).replaceAll(""))
-                .collect(Collectors.toList());
+        List<String> appIds = steamClient.getFollowedAppIds();
 
         JsonArray gists = gistClient.getGists();
         StringBuilder gistId = new StringBuilder();
