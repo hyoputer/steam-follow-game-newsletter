@@ -1,7 +1,7 @@
 package me.hyoputer;
 
 public class Steam {
-    private static String URL_FORMAT = "https://steamcommunity.com/profiles/%s/followedgames/";
+    private static String FOLLOWED_GAMES_URL_FORMAT = "https://steamcommunity.com/profiles/%s/followedgames/";
 
     private String userId;
 
@@ -10,6 +10,6 @@ public class Steam {
     }
 
     public String getFollowedURL() {
-        return String.format(URL_FORMAT, userId);
+        return String.format(FOLLOWED_GAMES_URL_FORMAT, userId);
     }
 }
