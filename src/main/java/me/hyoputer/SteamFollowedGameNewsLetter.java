@@ -3,7 +3,6 @@ package me.hyoputer;
 import java.io.IOException;
 import java.util.List;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -23,15 +22,7 @@ public class SteamFollowedGameNewsLetter {
         //get AppIds by parsing html
         List<String> appIds = steamClient.getFollowedAppIds();
 
-        JsonArray gists = gistClient.getGists();
-        StringBuilder gistId = new StringBuilder();
-
-        //get gistId that contains followed games' newsIds
-        gists.forEach(json -> {
-            if (json.getAsJsonObject().get("description").getAsString().equals(System.getenv("GIST_DESCRIPTION"))) {
-                gistId.append(json.getAsJsonObject().get("id").getAsString());
-            }
-        });
+        String gistId = gistClient.getGistId(System.getenv("GIST_DESCRIPTION"));
 
         if (StringUtils.isNotBlank(gistId)) {
             JsonObject gistContent = JsonParser

@@ -1,9 +1,7 @@
 package me.hyoputer;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -49,6 +47,22 @@ public class Gist {
         InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
         return JsonParser.parseReader(in).getAsJsonObject();
+    }
+
+    public String getGistId(String description) throws IOException {
+
+        JsonArray gists = getGists();
+        
+        StringBuilder gistId = new StringBuilder();
+
+        // get gistId that contains followed games' newsIds
+        gists.forEach(json -> {
+            if (json.getAsJsonObject().get("description").getAsString().equals(System.getenv("GIST_DESCRIPTION"))) {
+                gistId.append(json.getAsJsonObject().get("id").getAsString());
+            }
+        });
+
+        return gistId.toString();
     }
     
 }
