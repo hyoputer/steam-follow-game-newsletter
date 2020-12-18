@@ -7,8 +7,10 @@ import java.net.URL;
 import javax.net.ssl.HttpsURLConnection;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 public class Gist {
     private String accessToken;
@@ -52,7 +54,7 @@ public class Gist {
     public String getGistId(String description) throws IOException {
 
         JsonArray gists = getGists();
-        
+
         StringBuilder gistId = new StringBuilder();
 
         // get gistId that contains followed games' newsIds
@@ -63,6 +65,13 @@ public class Gist {
         });
 
         return gistId.toString();
+    }
+
+    public JsonObject getGistContent(String id) throws JsonSyntaxException, IOException {
+        return JsonParser
+                .parseString(getGist(id.toString()).get("files").getAsJsonObject()
+                        .get(System.getenv("GIST_FILE_NAME")).getAsJsonObject().get("content").getAsString())
+                .getAsJsonObject();
     }
     
 }

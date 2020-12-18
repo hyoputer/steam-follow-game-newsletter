@@ -25,10 +25,7 @@ public class SteamFollowedGameNewsLetter {
         String gistId = gistClient.getGistId(System.getenv("GIST_DESCRIPTION"));
 
         if (StringUtils.isNotBlank(gistId)) {
-            JsonObject gistContent = JsonParser
-                    .parseString(gistClient.getGist(gistId.toString()).get("files").getAsJsonObject()
-                            .get(System.getenv("GIST_FILE_NAME")).getAsJsonObject().get("content").getAsString())
-                    .getAsJsonObject();
+            JsonObject gistContent = gistClient.getGistContent(gistId);
 
             JsonObject newGistContent = new JsonObject();
 
