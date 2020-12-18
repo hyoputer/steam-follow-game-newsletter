@@ -46,9 +46,9 @@ public class Steam {
         return JsonParser.parseReader(in).getAsJsonObject();
     }
     
-    public String getLatestNewsId(String id) throws IOException {
+    public String getNewsId(String appId) throws IOException {
 
-        JsonObject appNews = getAppNews(id);
+        JsonObject appNews = getAppNews(appId);
 
         return appNews.get("appnews").getAsJsonObject().get("newsitems").getAsJsonArray().get(0).getAsJsonObject()
                 .get("gid").getAsString();
