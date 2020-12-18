@@ -29,7 +29,7 @@ public class Steam {
     }
 
     public List<String> getFollowedAppIds() throws IOException {
-        return Jsoup.connect(followedGameUrl).get().select(Steam.FOLLOWED_GAME_ITEM_SELECTOR)
+        return Jsoup.connect(followedGameUrl).get().select(FOLLOWED_GAME_ITEM_SELECTOR)
                 .eachAttr("href").stream().map(str -> Pattern.compile("\\D*").matcher(str).replaceAll(""))
                 .collect(Collectors.toList());
     }
