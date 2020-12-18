@@ -23,12 +23,15 @@ public class SteamFollowedGameNewsLetter {
         Steam steamClient = new Steam(System.getenv("STEAM_USER_ID"));
         Gist gistClient = new Gist(System.getenv("GIST_ACCESS_KEY"));
 
+        //get AppIds by parsing html
         List<String> appIds = Jsoup.connect(steamClient.getFollowedURL()).get().select(".gameListRowItemName > a")
                 .eachAttr("href").stream().map(str -> Pattern.compile("\\D*").matcher(str).replaceAll(""))
                 .collect(Collectors.toList());
 
         JsonArray gists = gistClient.getGists();
         StringBuilder gistId = new StringBuilder();
+
+        //get gistId that contains followed games' newsIds
         gists.forEach(json -> {
             if (json.getAsJsonObject().get("description").getAsString().equals(System.getenv("GIST_DESCRIPTION"))) {
                 gistId.append(json.getAsJsonObject().get("id").getAsString());
@@ -53,7 +56,7 @@ public class SteamFollowedGameNewsLetter {
                             .get(0).getAsJsonObject().get("gid").getAsString();
 
                     if (newsIdInGist == null || !(newsIdInGist.getAsString().equals(newsIdLatest))) {
-                        // System.out.println(appId + " not equal!");
+                        // System.out.println(appId + " not equal! " + newsIdLatest);
                     }
                     
                     newGistContent.addProperty(appId, newsIdLatest);
