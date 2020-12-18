@@ -31,12 +31,10 @@ public class SteamFollowedGameNewsLetter {
 
             appIds.forEach(appId -> {
                 try {
-                    JsonObject appNews = steamClient.getAppNews(appId);
 
                     JsonElement newsIdInGist = gistContent.get(appId);
 
-                    String newsIdLatest = appNews.get("appnews").getAsJsonObject().get("newsitems").getAsJsonArray()
-                            .get(0).getAsJsonObject().get("gid").getAsString();
+                    String newsIdLatest = steamClient.getLatestNewsId(appId);
 
                     if (newsIdInGist == null || !(newsIdInGist.getAsString().equals(newsIdLatest))) {
                         // System.out.println(appId + " not equal! " + newsIdLatest);

@@ -40,9 +40,17 @@ public class Steam {
 
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-        
+
         InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
         return JsonParser.parseReader(in).getAsJsonObject();
+    }
+    
+    public String getLatestNewsId(String id) throws IOException {
+
+        JsonObject appNews = getAppNews(id);
+
+        return appNews.get("appnews").getAsJsonObject().get("newsitems").getAsJsonArray().get(0).getAsJsonObject()
+                .get("gid").getAsString();
     }
 }
