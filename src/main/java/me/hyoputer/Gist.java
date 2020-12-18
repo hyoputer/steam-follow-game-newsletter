@@ -13,7 +13,7 @@ import com.google.gson.JsonParser;
 public class Gist {
     private String accessToken;
 
-    private static String GITHUB_URL = "https://api.github.com";
+    private static String GITHUB_URL = "https://api.github.com/";
 
     public Gist(String accessToken) {
         this.accessToken = accessToken;
@@ -21,7 +21,7 @@ public class Gist {
 
     public JsonArray getGists() throws IOException {
 
-        URL url = new URL(GITHUB_URL + "/gists");
+        URL url = new URL(GITHUB_URL + "gists");
 
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
