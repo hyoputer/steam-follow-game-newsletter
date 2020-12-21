@@ -43,6 +43,7 @@ public class Steam {
 
         InputStreamReader in = new InputStreamReader(connection.getInputStream());
 
-        return JsonParser.parseReader(in).getAsJsonObject();
+        return JsonParser.parseReader(in).getAsJsonObject().get("appnews").getAsJsonObject().get("newsitems")
+                .getAsJsonArray().get(0).getAsJsonObject();
     }
 }

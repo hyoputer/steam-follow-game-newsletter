@@ -32,8 +32,7 @@ public class SteamFollowedGameNewsLetter {
                 try {
 
                     JsonObject appNews = steamClient.getAppNews(appId);
-                    String newsIdLatest = appNews.get("appnews").getAsJsonObject().get("newsitems").getAsJsonArray()
-                            .get(0).getAsJsonObject().get("gid").getAsString();
+                    String newsIdLatest = appNews.get("gid").getAsString();
 
                     JsonElement newsIdInGist = gistContent.get(appId);
 
