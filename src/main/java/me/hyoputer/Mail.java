@@ -13,13 +13,18 @@ import javax.mail.internet.MimeMessage;
 
 public class Mail {
 
-    private static final String EMAIL_ID = System.getenv("EMAIL_ID");
-    private static final String EMAIL_PASSWORD = System.getenv("EMAIL_PASSWORD");
+    private String EMAIL_ID;
+    private String EMAIL_PASSWORD;
 
     private static final String SMTP_SERVER = "smtp.gmail.com";
     private static final int SMTP_PORT = 465;
 
-    public static void sendMail(String title, String content) {
+    public Mail(String id, String password) {
+        EMAIL_ID = id;
+        EMAIL_PASSWORD = password;
+    }
+
+    public void sendMail(String title, String content) {
         
         Properties prop = new Properties();
         prop.put("mail.smtp.host", SMTP_SERVER); 
@@ -50,10 +55,8 @@ public class Mail {
             // send the message
             Transport.send(message); ////전송
         } catch (AddressException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (MessagingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

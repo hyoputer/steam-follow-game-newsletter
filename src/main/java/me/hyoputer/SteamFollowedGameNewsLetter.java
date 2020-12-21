@@ -15,13 +15,14 @@ import org.apache.commons.lang3.StringUtils;
 public class SteamFollowedGameNewsLetter {
     public static void main(String[] args) throws Exception {
 
-        Steam steamClient = new Steam(System.getenv("STEAM_USER_ID"));
-        Gist gistClient = new Gist(System.getenv("GIST_ACCESS_KEY"));
+        Steam steamClient = new Steam(Configs.STEAM_USER_ID);
+        Gist gistClient = new Gist(Configs.GIST_ACCESS_KEY);
+        Mail mailClient = new Mail(Configs.EMAIL_ID, Configs.EMAIL_PASSWORD);
 
         //get AppIds by parsing html
         List<String> appIds = steamClient.getFollowedAppIds();
 
-        String gistId = gistClient.getGistId(System.getenv("GIST_DESCRIPTION"));
+        String gistId = gistClient.getGistId(Configs.GIST_DESCRIPTION);
 
         if (StringUtils.isNotBlank(gistId)) {
 
@@ -37,8 +38,10 @@ public class SteamFollowedGameNewsLetter {
                     JsonElement newsIdInGist = gistContent.get(appId);
 
                     if (newsIdInGist == null || !(newsIdInGist.getAsString().equals(newsIdLatest))) {
-                        System.out.println(appId + " not equal! " + newsIdLatest);
-                        // Mail.sendMail(appId + " not equal! " + newsIdLatest, "12345");
+                        System.out.println(appNews.get("title").getAsString() + " not equal! " + appNews.get("url")
+                                .getAsString());
+                        mailClient.sendMail(appNews.get("title").getAsString(), appNews.get("url").getAsString());
+
                     }
                     
                     newGistContent.addProperty(appId, newsIdLatest);
