@@ -8,6 +8,8 @@ public class Configs {
     
     public static final String GIST_DESCRIPTION = System.getenv("GIST_DESCRIPTION");
 
+    public static final String GIST_FILE_NAME = System.getenv("GIST_FILE_NAME");
+
     public static final String EMAIL_ID = System.getenv("EMAIL_ID");
     
     public static final String EMAIL_PASSWORD = System.getenv("EMAIL_PASSWORD");
