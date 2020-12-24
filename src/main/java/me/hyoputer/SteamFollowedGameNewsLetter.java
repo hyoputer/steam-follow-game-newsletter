@@ -39,7 +39,6 @@ public class SteamFollowedGameNewsLetter {
                         // System.out.println(appNews.get("title").getAsString() + " not equal! " + appNews.get("url")
                         //         .getAsString());
                         mailClient.sendMail(appNews.get("title").getAsString(), appNews.get("url").getAsString());
-
                     }
                     
                     newGistContent.addProperty(appId, newsIdLatest);
@@ -48,7 +47,8 @@ public class SteamFollowedGameNewsLetter {
                 }
             });
             
-            githubClient.updateGist(gistId, Configs.GIST_FILE_NAME, newGistContent);
+            if (!gistContent.equals(newGistContent))
+                githubClient.updateGist(gistId, Configs.GIST_FILE_NAME, newGistContent);
         }
     }
 }
