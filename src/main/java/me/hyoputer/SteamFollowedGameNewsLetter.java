@@ -6,8 +6,6 @@ import java.util.List;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * Hello world!
  *
@@ -16,17 +14,17 @@ public class SteamFollowedGameNewsLetter {
     public static void main(String[] args) throws Exception {
 
         Steam steamClient = new Steam(Configs.STEAM_USER_ID);
-        Gist gistClient = new Gist(Configs.GIST_ACCESS_KEY);
+        GithubClient githubClient = new GithubClient(Configs.GIST_ACCESS_KEY);
         Mail mailClient = new Mail(Configs.EMAIL_ID, Configs.EMAIL_PASSWORD);
 
         //get AppIds by parsing html
         List<String> appIds = steamClient.getFollowedAppIds();
 
-        String gistId = gistClient.getGistId(Configs.GIST_DESCRIPTION);
+        String gistId = githubClient.getGistId(Configs.GIST_DESCRIPTION);
 
-        if (StringUtils.isNotBlank(gistId)) {
+        if (gistId != null) {
 
-            JsonObject gistContent = gistClient.getGistContent(gistId);
+            JsonObject gistContent = githubClient.getGistContent(gistId, Configs.GIST_FILE_NAME);
             JsonObject newGistContent = new JsonObject();
 
             appIds.forEach(appId -> {
@@ -50,7 +48,7 @@ public class SteamFollowedGameNewsLetter {
                 }
             });
             
-            gistClient.updateGist(gistId, newGistContent);
+            githubClient.updateGist(gistId, Configs.GIST_FILE_NAME, newGistContent);
         }
     }
 }
