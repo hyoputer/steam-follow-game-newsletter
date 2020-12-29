@@ -15,7 +15,7 @@ jobs:
         java-version: '11.0.9'
 
     - name: Build with Maven
-    - run: mvn -B package --file pom.xml
+      run: mvn -B package --file pom.xml
 
     - name: mail
       env:
@@ -25,5 +25,5 @@ jobs:
         GIST_DESCRIPTION: ${{ secrets.GIST_DESCRIPTION }}
         GIST_FILE_NAME: ${{ secrets.GIST_FILE_NAME }}
         STEAM_USER_ID: ${{ secrets.STEAM_USER_ID }}
-    - run: |
+      run: |
         java -jar target/steamfollowmail-1.0-SNAPSHOT.jar
